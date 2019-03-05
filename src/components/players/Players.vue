@@ -1,14 +1,29 @@
 <template>
-  <div class="players">
-    <h3> Players </h3>
-    <div class="sign-out float-right">
+  <div class="containter">
+    <div class="sign-out">
       <label @click="signOut">Sign out</label>
+    </div>
+    <div class="players">
+      <h3> Players </h3>
+      <table>
+        <td v-for="player in players">
+          {{player.name}}
+        </td>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      players: [
+        {name: 'Trae Young'},
+        {name: 'Kevin Huerter'}
+      ]
+    }
+  },
   methods: {
     signOut () {
       this.$http.secured.delete('/signin')
@@ -22,3 +37,10 @@ export default {
   }
 }
 </script>
+
+ <style>
+  .sign-out {
+    text-align: right;
+    padding: 1%;
+  }
+ </style>

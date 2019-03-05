@@ -50,7 +50,7 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      this.$router.replace('/players')
+      this.$router.replace('/drafts')
     },
     signinFailed (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || 'that account doesnt exist, signup to create an account'
@@ -59,7 +59,7 @@ export default {
     },
     checkSignedIn () {
       if (localStorage.signedIn) {
-        this.$router.replace('/players')
+        this.$router.replace('/drafts')
       }
     }
   }
