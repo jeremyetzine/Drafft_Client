@@ -34,6 +34,37 @@
         <td>{{player.allstar}}</td>
       </tr>
     </table>
+    <marquee scrollamount="10">
+      <i class="fas fa-basketball-ball ball10"></i>
+    </marquee>
+    <marquee scrollamount="3">
+      <i class="fas fa-basketball-ball ball3"></i>
+    </marquee>
+    <marquee scrollamount="8">
+      <i class="fas fa-basketball-ball ball8"></i>
+    </marquee>
+    <marquee scrollamount="6">
+      <i class="fas fa-basketball-ball ball6"></i>
+    </marquee>
+    <marquee scrollamount="1">
+      <i class="fas fa-basketball-ball ball1"></i>
+    </marquee>
+    <marquee scrollamount="7">
+      <i class="fas fa-basketball-ball ball7"></i>
+    </marquee>
+    <marquee scrollamount="2">
+      <i class="fas fa-basketball-ball ball2"></i>
+    </marquee>
+    <marquee scrollamount="4">
+      <i class="fas fa-basketball-ball ball4"></i>
+    </marquee>
+    <marquee scrollamount="9">
+      <i class="fas fa-basketball-ball ball9"></i>
+    </marquee>
+    <marquee scrollamount="5">
+      <i class="fas fa-basketball-ball ball5"></i>
+    </marquee>
+
   </div>
 </template>
 
@@ -104,4 +135,39 @@ export default {
   th, td {
     padding: 10px;
   }
+  .fas {
+    color: orange;
+    font-size: 200%;
+  }
+  .ball1 {
+    -webkit-animation: rotation 9s infinite linear;
+  }
+  .ball2 {
+    -webkit-animation: rotation 5s infinite linear;
+  }
+  .ball3 {
+    -webkit-animation: rotation 5s infinite linear;
+  }
+  .ball4 {
+    -webkit-animation: rotation 3s infinite linear;
+  }
+  .ball5 {
+    -webkit-animation: rotation 3s infinite linear;
+  }
+  .ball6 {
+    -webkit-animation: rotation 3s infinite linear;
+  }
+  .ball7 {
+    -webkit-animation: rotation 2s infinite linear;
+  }
+  .ball8 {
+    -webkit-animation: rotation 2s infinite linear;
+  }
+  .ball9 {
+    -webkit-animation: rotation 2s infinite linear;
+  }
+  .ball10 {
+    -webkit-animation: rotation 2s infinite linear;
+  }
+  @-webkit-keyframes rotation {from {-webkit-transform: rotate(359deg)} to {-webkit-transform: rotate(0deg)}}
 </style>
