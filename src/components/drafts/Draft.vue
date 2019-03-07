@@ -1,9 +1,10 @@
 <template>
   <div class="containter">
+    <label class="loggedInAs">
+      You are logged in as: &nbsp; <strong>{{users[currentUserID - 1].username}}</strong>
+    </label>
     <div class="sign-out">
-      <label>
-        You are logged in as: <strong>{{users[currentUserID - 1].username}}</strong>
-      </label>
+      <router-link to="/squad">Your Squad</router-link>
       <label @click="signOut">Sign out</label>
     </div>
     <h2>{{draft.name}}</h2>
@@ -177,8 +178,9 @@ export default {
      background-color: orange;
    }
   .sign-out {
-    text-align: right;
-    padding: 1%;
+    display: flex;
+    padding: 0 1%;
+    justify-content: space-between;
   }
   .draft {
     display: inline-block;
@@ -208,7 +210,9 @@ export default {
   th, td {
     padding: 10px;
   }
-  label {
-    margin-left: 10px;
+  .loggedInAs {
+    display: flex;
+    padding: 1%;
+    padding-bottom: 0;
   }
  </style>

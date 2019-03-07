@@ -4,6 +4,7 @@ import Signin from '@/components/Signin'
 import Signup from '@/components/Signup'
 import Drafts from '@/components/drafts/Drafts'
 import Draft from '@/components/drafts/Draft'
+import Squad from '@/components/Squad'
 
 Vue.use(Router)
 
@@ -36,7 +37,11 @@ export default new Router({
       path: '/drafts',
       name: 'Drafts',
       component: Drafts
+    },
+    {
+      path: '/squad',
+      name: 'Squad',
+      component: Squad
     }
-
   ]
 })
