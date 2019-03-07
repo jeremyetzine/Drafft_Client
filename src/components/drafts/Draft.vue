@@ -9,7 +9,7 @@
     </div>
     <h2>{{draft.name}}</h2>
     <hr>
-    <h5>chicken is picking...</h5>
+    <h5>{{users[0].username}} is picking...</h5>
     <div class="timer">
       :30
     </div>
@@ -29,24 +29,24 @@
           <hr>
           <div class="row yourTeam">
             <div class="col-5">
-              <li><strong>Teams</strong></li>
+              <!-- <li><strong>Teams</strong></li>
               <li v-for="team in squads.teams">
                 {{team.name}}
               </li>
-              <hr>
+              <hr> -->
               <li><strong>Players</strong></li>
-              <li v-for="player in squads.players">
+              <li v-for="player in squads[currentUserID-1].players">
                 {{player.name}}
               </li>
             </div>
             <div class="col-5">
-              <br>
+              <!-- <br>
               <li v-for="team in squads.teams">
                 {{team.abbr}}
             </li>
-              <hr>
+              <hr> -->
               <li><strong>Position</strong></li>
-              <li v-for="player in squads.players">
+              <li v-for="player in squads[currentUserID-1].players">
                 {{player.position}}
               </li>
             </div>
@@ -71,7 +71,7 @@
             </tr>
             <tr v-for="player in players">
               <td>
-                <input type="checkbox" :value="player.name">
+                <input type="checkbox" :value="player.name" v-on:change="addToSquad">
               </td>
               <td>{{player.name}}</td>
               <td>{{player.pts}}</td>
@@ -116,6 +116,7 @@ export default {
     this.getPlayers()
     this.getUsers()
     this.getSquads()
+    // this.addToSquad()
   },
   methods: {
     signOut () {
@@ -146,9 +147,8 @@ export default {
               const currentUserId = user.id
               console.log('currentUser = ' + currentUserId)
               this.currentUserID = currentUserId
-            } // Will display contents of the object inside the array
+            }
           }
-
         })
     },
     getSquads () {
@@ -157,6 +157,23 @@ export default {
           this.squads = response.data
           console.log('squads', this.squads)
         })
+    },
+    addToSquad () {
+      this.$http.secured.put('/players/1.json', {
+        squad_id: this.currentUserID
+      })
+        .then(response => {
+          this.updateSquad(response)
+        })
+
+    },
+    async updateSquad (response) {
+      this.$http.secured.get('/squads.json')
+        .then(response => {
+          this.squads = response.data
+        })
+      await this.$nextTick()
+      console.log('squads again', this.squads)
     }
   }
 }
