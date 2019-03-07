@@ -1,7 +1,9 @@
 <template>
   <div class="containter">
     <div class="sign-out">
-      <label></label>
+      <label>
+        You are logged in as: <strong>{{users[currentUserID - 1].username}}</strong>
+      </label>
       <label @click="signOut">Sign out</label>
     </div>
     <h2>{{draft.name}}</h2>
@@ -17,12 +19,12 @@
         <div class="col-3">
           Round 1
           <hr>
-          <li v-for="draft in draft.users">
-            {{draft.username}}
+          <li v-for="user in users">
+            {{user.username}}
           </li>
         </div>
         <div class="col-3">
-          Your Team ({{draft.squads && draft.squads[0].name}})
+          Your Team is the <strong><u>{{squads[currentUserID-1].name}}</u></strong>
           <hr>
           <div class="row yourTeam">
             <div class="col-5">
@@ -95,7 +97,7 @@ export default {
       draft: [],
       players: [],
       users: [],
-      currentUser: [],
+      currentUserID: [],
       squads: []
     }
   },
@@ -142,7 +144,7 @@ export default {
             if (localStorage.email === user.email) {
               const currentUserId = user.id
               console.log('currentUser = ' + currentUserId)
-
+              this.currentUserID = currentUserId
             } // Will display contents of the object inside the array
           }
 
