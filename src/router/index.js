@@ -8,10 +8,6 @@ import Squad from '@/components/Squad'
 
 Vue.use(Router)
 
-// const Draft = {
-//   template: `<div>Draft {{ $route.params.id }}</div>`
-// }
-
 export default new Router({
   routes: [
     {

@@ -116,7 +116,6 @@ export default {
     this.getPlayers()
     this.getUsers()
     this.getSquads()
-    // this.addToSquad()
   },
   methods: {
     signOut () {
