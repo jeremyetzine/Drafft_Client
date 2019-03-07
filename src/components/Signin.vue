@@ -9,12 +9,16 @@
         <input v-model="email" type="email" class="form-control" id="email" placeholder="email@example.com">
       </div>
       <div class="form-group">
+        <label for="username">Username</label>
+        <input v-model="username" type="username" class="form-control" id="username" placeholder="chicken">
+      </div>
+      <div class="form-group">
         <label for="password">Password</label>
         <input v-model="password" type="password" class="form-control" id="password" placeholder="Password">
       </div>
       <button type="submit" class="btn btn-primary mb-3">Sign in</button>
       <div>
-        <router-link to="/signup">Sign up</router-link>
+        <router-link to="/">Sign up</router-link>
       </div>
     </form>
   </div>
@@ -27,6 +31,7 @@ export default {
     return {
       email: '',
       password: '',
+      username: '',
       error: ''
     }
   },
@@ -38,7 +43,7 @@ export default {
   },
   methods: {
     signin () {
-      this.$http.plain.post('/signin', { email: this.email, password: this.password })
+      this.$http.plain.post('/signin', { email: this.email, password: this.password, username: this.username })
         .then(response => this.signinSuccessful(response))
         .catch(error => this.signinFailed(error))
     },
@@ -50,7 +55,7 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      this.$router.replace('/drafts')
+      this.$router.replace('/draft')
     },
     signinFailed (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || 'that account doesnt exist, signup to create an account'
@@ -59,7 +64,7 @@ export default {
     },
     checkSignedIn () {
       if (localStorage.signedIn) {
-        this.$router.replace('/drafts')
+        this.$router.replace('/draft')
       }
     }
   }

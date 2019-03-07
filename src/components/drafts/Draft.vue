@@ -1,11 +1,12 @@
 <template>
   <div class="containter">
     <div class="sign-out">
+      <label></label>
       <label @click="signOut">Sign out</label>
     </div>
-    <h2>{{drafts[0].name}}</h2>
+    <h2>{{draft.name}}</h2>
     <hr>
-    <h5>user2 is picking...</h5>
+    <h5>chicken is picking...</h5>
     <div class="timer">
       :30
     </div>
@@ -16,44 +17,35 @@
         <div class="col-3">
           Round 1
           <hr>
-          <li>user1</li>
-          <li>user2</li>
-          <li>user3</li>
-          <li>user4</li>
-          <li>user5</li>
-          <li>user6</li>
+          <li v-for="draft in draft.users">
+            {{draft.username}}
+          </li>
         </div>
         <div class="col-3">
-          Your Team
+          Your Team ({{draft.squads && draft.squads[0].name}})
           <hr>
           <div class="row yourTeam">
             <div class="col-5">
-              <li>1: playername</li>
-              <li>2: playername</li>
-              <li>3: playername</li>
-              <li>4: playername</li>
-              <li>5: playername</li>
-              <li>6: playername</li>
-              <li>7: playername</li>
-              <li>8: playername</li>
-              <li>9: playername</li>
-              <li>10: playername</li>
-              <li>11: playername</li>
-              <li>12: playername</li>
+              <li><strong>Teams</strong></li>
+              <li v-for="team in squad.teams">
+                {{team.name}}
+              </li>
+              <hr>
+              <li><strong>Players</strong></li>
+              <li v-for="player in squad.players">
+                {{player.name}}
+              </li>
             </div>
             <div class="col-5">
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
-              <li>PG</li>
+              <br>
+              <li v-for="team in squad.teams">
+                {{team.abbr}}
+            </li>
+              <hr>
+              <li><strong>Position</strong></li>
+              <li v-for="player in squad.players">
+                {{player.position}}
+              </li>
             </div>
           </div>
         </div>
@@ -62,6 +54,7 @@
           <hr>
           <table class="available">
             <tr>
+              <th></th>
               <th>Name</th>
               <th>PTS</th>
               <th>RB</th>
@@ -73,17 +66,20 @@
               <th>3PM</th>
               <th>3P%</th>
             </tr>
-            <tr>
-              <td>Name Name</td>
-              <td>24.1</td>
-              <td>12.2</td>
-              <td>2.9</td>
-              <td>1.0</td>
-              <td>2.5</td>
-              <td>52%</td>
-              <td>71%</td>
-              <td>0.2</td>
-              <td>30%</td>
+            <tr v-for="player in players">
+              <td>
+                <input type="checkbox" :value="player.name">
+              </td>
+              <td>{{player.name}}</td>
+              <td>{{player.pts}}</td>
+              <td>{{player.rb}}</td>
+              <td>{{player.ast}}</td>
+              <td>{{player.stl}}</td>
+              <td>{{player.blk}}</td>
+              <td>{{player.fgperc}}%</td>
+              <td>{{player.ftperc}}%</td>
+              <td>{{player.threepm}}</td>
+              <td>{{player.threeperc}}%</td>
             </tr>
           </table>
         </div>
@@ -96,20 +92,27 @@
 export default {
   data () {
     return {
-      drafts: []
+      draft: [],
+      players: [],
+      users: [],
+      currentUser: [],
+      squad: []
     }
   },
   created () {
     if (!localStorage.signedIn) {
       this.$router.replace('/')
     } else {
-      this.$http.secured.get('/drafts.json')
+      this.$http.secured.get('/drafts/1.json')
         .then(response => {
-          this.drafts = response.data
-          console.log(this.drafts)
+          this.draft = response.data
+          console.log('draft', this.draft)
         })
         .catch(error => this.setError(error, 'Something went wrong'))
     }
+    this.getPlayers()
+    this.getUsers()
+    this.getSquad()
   },
   methods: {
     signOut () {
@@ -120,6 +123,27 @@ export default {
           this.$router.replace('/')
         })
         .catch(error => this.setError(error, 'Cannot sign out'))
+    },
+    getPlayers () {
+      this.$http.secured.get('/players.json')
+        .then(response => {
+          this.players = response.data
+          console.log('players', this.players)
+        })
+    },
+    getUsers () {
+      this.$http.secured.get('/users.json')
+        .then(response => {
+          this.users = response.data
+          console.log('users', this.users)
+        })
+    },
+    getSquad () {
+      this.$http.secured.get('/squads/1.json')
+        .then(response => {
+          this.squad = response.data
+          console.log('squad', this.squad)
+        })
     }
   }
 }
@@ -171,5 +195,8 @@ export default {
   }
   th, td {
     padding: 10px;
+  }
+  label {
+    margin-left: 10px;
   }
  </style>

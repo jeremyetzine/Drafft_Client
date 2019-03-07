@@ -14,12 +14,16 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+    path: '*',
+    redirect: '/'
+    },
+    {
+      path: '/signin',
       name: 'Signin',
       component: Signin
     },
     {
-      path: '/signup',
+      path: '/',
       name: 'Signup',
       component: Signup
     },
