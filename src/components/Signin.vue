@@ -44,16 +44,18 @@ export default {
   methods: {
     signin () {
       this.$http.plain.post('/signin', { email: this.email, password: this.password, username: this.username })
-        .then(response => this.signinSuccessful(response))
+        .then(response => this.signinSuccessful(response, this.email))
         .catch(error => this.signinFailed(error))
     },
-    signinSuccessful (response) {
+    signinSuccessful (response, email) {
+      console.log('response is: ', response.data)
       if (!response.data.csrf) {
         this.signinFailed(response)
         return
       }
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
+      localStorage.email = email
       this.error = ''
       this.$router.replace('/draft')
     },

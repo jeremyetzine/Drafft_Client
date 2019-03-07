@@ -49,16 +49,17 @@ export default {
   methods: {
     signup () {
       this.$http.plain.post('/signup', { email: this.email, password: this.password, password_confirmation: this.password_confirmation, username: this.username })
-        .then(response => this.signupSuccessful(response))
+        .then(response => this.signupSuccessful(response, this.email))
         .catch(error => this.signupFailed(error))
     },
-    signupSuccessful (response) {
+    signupSuccessful (response, email) {
       if (!response.data.csrf) {
         this.signupFailed(response)
         return
       }
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
+      localStorage.email = email
       this.error = ''
       this.$router.replace('/draft')
     },

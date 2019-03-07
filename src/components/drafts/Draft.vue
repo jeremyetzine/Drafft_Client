@@ -27,23 +27,23 @@
           <div class="row yourTeam">
             <div class="col-5">
               <li><strong>Teams</strong></li>
-              <li v-for="team in squad.teams">
+              <li v-for="team in squads.teams">
                 {{team.name}}
               </li>
               <hr>
               <li><strong>Players</strong></li>
-              <li v-for="player in squad.players">
+              <li v-for="player in squads.players">
                 {{player.name}}
               </li>
             </div>
             <div class="col-5">
               <br>
-              <li v-for="team in squad.teams">
+              <li v-for="team in squads.teams">
                 {{team.abbr}}
             </li>
               <hr>
               <li><strong>Position</strong></li>
-              <li v-for="player in squad.players">
+              <li v-for="player in squads.players">
                 {{player.position}}
               </li>
             </div>
@@ -96,7 +96,7 @@ export default {
       players: [],
       users: [],
       currentUser: [],
-      squad: []
+      squads: []
     }
   },
   created () {
@@ -112,7 +112,7 @@ export default {
     }
     this.getPlayers()
     this.getUsers()
-    this.getSquad()
+    this.getSquads()
   },
   methods: {
     signOut () {
@@ -120,6 +120,7 @@ export default {
         .then(response => {
           delete localStorage.csrf
           delete localStorage.signedIn
+          delete localStorage.email
           this.$router.replace('/')
         })
         .catch(error => this.setError(error, 'Cannot sign out'))
@@ -136,13 +137,22 @@ export default {
         .then(response => {
           this.users = response.data
           console.log('users', this.users)
+          for (let user of this.users) {
+            console.log('email ', user.email)
+            if (localStorage.email === user.email) {
+              const currentUserId = user.id
+              console.log('currentUser = ' + currentUserId)
+
+            } // Will display contents of the object inside the array
+          }
+
         })
     },
-    getSquad () {
-      this.$http.secured.get('/squads/1.json')
+    getSquads () {
+      this.$http.secured.get('/squads.json')
         .then(response => {
-          this.squad = response.data
-          console.log('squad', this.squad)
+          this.squads = response.data
+          console.log('squads', this.squads)
         })
     }
   }

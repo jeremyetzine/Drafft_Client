@@ -14,8 +14,8 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-    path: '*',
-    redirect: '/'
+      path: '*',
+      redirect: '/'
     },
     {
       path: '/signin',
